@@ -5,7 +5,7 @@ class Student:
         self.gender = gender
         self.finished_courses = []
         self.courses_in_progress = []
-        self.grades = {}
+        self.grade = {}
         self.courses_attached = []
         self.srgr = float()
 
@@ -20,11 +20,11 @@ class Student:
 
     def srgr(self):
         grades_count = 0
-        if not self.grades:
+        if not self.grade:
             return 0
         lyst=[]
-        for k in self.grades:
-             grades_count += len(self.grades[k])
+        for k in self.grade:
+             grades_count += len(self.grade[k])
              lyst.extend(k)
         return float(sum(lyst)/max(len(lyst), 1))
 
@@ -74,10 +74,10 @@ class Lecturer(Mentor):
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
-            if course in student.grades:
-                student.grades[course] += [grade]
+            if course in student.grade:
+                student.grade[course] += [grade]
             else:
-                student.grades[course] = [grade]
+                student.grade[course] = [grade]
         else:
             return 'Ошибка'
 
@@ -97,7 +97,7 @@ cool_reviewer.rate_hw(best_student, 'Python', 10)
 cool_reviewer.rate_hw(best_student, 'Python', 10)
 cool_reviewer.rate_hw(best_student, 'Python', 10)
 
-print(best_student.grades)
+print(best_student.grade)
 
 lecturer_1 = Lecturer('Kirill', 'Makarov')
 lecturer_1.courses_attached += ['Python']
@@ -108,19 +108,17 @@ lecturer_3.courses_attached += ['Python']
 
 cool_rewiewer_1 = Reviewer('Some', 'Buddy')
 cool_rewiewer_1.courses_attached += ['Python']
-cool_rewiewer_1.courses_attached += ['Java']
-cool_rewiewer_2 = Reviewer('Ostap', 'Bender')
+cool_rewiewer_2 = Reviewer('Some', 'Buddy')
 cool_rewiewer_2.courses_attached += ['Python']
-cool_rewiewer_2.courses_attached += ['Java']
 
-student_1 = Student('Denis', 'Sviridov', 'Man')
-student_1.courses_in_progress += ['Python']
+student_1 = Student('Danil', 'Sidorenko', 'Man')
+student_1.courses_in_progress += ['Python', 'Git']
 student_1.finished_courses += ['Введение в программирование']
-student_2 = Student('Roman', 'Malikov', 'Man')
-student_2.courses_in_progress += ['Python']
+student_2 = Student('Nikita', 'Udovichenko', 'Man')
+student_2.courses_in_progress += ['Python', 'Git']
 student_2.finished_courses += ['Введение в программирование']
-student_3 = Student('Sidor', 'Petrov', 'Man')
-student_3.courses_in_progress += ['Python']
+student_3 = Student('Ilya', 'Vasilchenko', 'Man')
+student_3.courses_in_progress += ['Python', 'Git']
 student_3.finished_courses += ['Введение в программирование']
 
 student_1.rate_lecture(lecturer_1, 'Python', 10)
@@ -159,7 +157,7 @@ print(f'Результат сравнения студентов(по средн
       f'{student_1.name} {student_1.surname} < {student_2.name} {student_2.surname} = {str(student_1) > str(student_2)}')
 print()
 print(f'Результат сравнения лекторов (по средним оценкам за лекции): '
-      f'{lecturer_1.name} {lecturer_1.surname} < {lecturer_2.name} {lecturer_2.surname} = {lecturer_1 > lecturer_2}')
+      f'{lecturer_1.name} {lecturer_1.surname} < {lecturer_2.name} {lecturer_2.surname} = {str(lecturer_1) > str(lecturer_2)}')
 print()
 
 
